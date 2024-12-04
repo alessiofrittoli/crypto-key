@@ -1,0 +1,16 @@
+/src
+/__tests__
+/docs
+
+/node_modules
+/.git
+
+.gitignore
+.env.*
+.DS_Store
+
+eslint.config.mjs
+jest.config.ts
+jest.setup.ts
+tsconfig.json
+tsup.config.ts
