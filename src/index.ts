@@ -1,1 +1,1 @@
-// 
+export { default as Hmac } from './Hmac'

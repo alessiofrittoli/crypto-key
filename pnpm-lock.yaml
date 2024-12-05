@@ -7,6 +7,13 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@alessiofrittoli/crypto-algorithm':
+        specifier: ^1.2.0
+        version: 1.2.0
+      '@alessiofrittoli/crypto-buffer':
+        specifier: ^2.0.1
+        version: 2.0.1
     devDependencies:
       '@eslint/js':
         specifier: ^9.16.0
@@ -52,6 +59,12 @@ importers:
         version: 8.17.0(eslint@9.16.0)(typescript@5.7.2)
 
 packages:
+
+  '@alessiofrittoli/crypto-algorithm@1.2.0':
+    resolution: {integrity: sha512-j6OQzQqyy4gI/5tNzTFheDNgTfEuXXYUiTDOBZtQ7thExhRakwVr6V4futacpVyjEdHujAQFGV0Mvz3nCjpVUA==}
+
+  '@alessiofrittoli/crypto-buffer@2.0.1':
+    resolution: {integrity: sha512-hTFnVRawDlDJUkY0fTgEbsbCP+lQ6cXqAyzrVp/dn7AB+neWb1JMzLJRGC9kiImPhmuEsW3/R+d/JyXSU76msA==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -2252,6 +2265,10 @@ packages:
     engines: {node: '>=10'}
 
 snapshots:
+
+  '@alessiofrittoli/crypto-algorithm@1.2.0': {}
+
+  '@alessiofrittoli/crypto-buffer@2.0.1': {}
 
   '@ampproject/remapping@2.3.0':
     dependencies:
