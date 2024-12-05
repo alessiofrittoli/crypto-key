@@ -1,6 +1,6 @@
 {
-	"name": "@alessiofrittoli/node-module-starter",
-	"version": "0.2.0",
+	"name": "@alessiofrittoli/crypto-key",
+	"version": "0.1.0",
 	"description": "Basic Node Module repository",
 	"author": {
 		"name": "Alessio Frittoli",
@@ -13,14 +13,14 @@
 		"npm",
 		"node_modules"
 	],
-	"homepage": "https://github.com/alessiofrittoli/node-module-starter#readme",
+	"homepage": "https://github.com/alessiofrittoli/crypto-key#readme",
 	"bugs": {
-		"url": "https://github.com/alessiofrittoli/node-module-starter/issues",
+		"url": "https://github.com/alessiofrittoli/crypto-key/issues",
 		"email": "info@alessiofrittoli.it"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/alessiofrittoli/node-module-starter.git"
+		"url": "git+https://github.com/alessiofrittoli/crypto-key.git"
 	},
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
