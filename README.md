@@ -2,7 +2,7 @@
 
 Version 0.1.0
 
-## Starter repository for developing node_modules
+## Lightweight TypeScript library for Node.js Cryptographic keys
 
 ### Table of Contents
 

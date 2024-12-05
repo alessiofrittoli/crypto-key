@@ -1,7 +1,7 @@
 {
 	"name": "@alessiofrittoli/crypto-key",
 	"version": "0.1.0",
-	"description": "Basic Node Module repository",
+	"description": "Lightweight TypeScript library for Node.js Cryptographic keys",
 	"author": {
 		"name": "Alessio Frittoli",
 		"email": "info@alessiofrittoli.it",
@@ -10,8 +10,9 @@
 	"license": "MIT",
 	"keywords": [
 		"nodejs",
-		"npm",
-		"node_modules"
+		"crypto",
+		"keys",
+		"crypto-keys"
 	],
 	"homepage": "https://github.com/alessiofrittoli/crypto-key#readme",
 	"bugs": {
