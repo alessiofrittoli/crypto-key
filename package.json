@@ -43,6 +43,11 @@
 			"types": "./dist/Scrypt.d.ts",
 			"import": "./dist/Scrypt.mjs",
 			"require": "./dist/Scrypt.js"
+		},
+		"./utils": {
+			"types": "./dist/utils.d.ts",
+			"import": "./dist/utils.mjs",
+			"require": "./dist/utils.js"
 		}
 	},
 	"sideEffects": false,
