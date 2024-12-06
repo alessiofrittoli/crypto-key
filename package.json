@@ -29,6 +29,22 @@
 	"files": [
 		"dist"
 	],
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.js"
+		},
+		"./Hmac": {
+			"types": "./dist/Hmac.d.ts",
+			"import": "./dist/Hmac.mjs",
+			"require": "./dist/Hmac.js"
+		},
+		"./Scrypt": {
+			"types": "./dist/Scrypt.d.ts",
+			"import": "./dist/Scrypt.mjs",
+			"require": "./dist/Scrypt.js"
+		}
+	},
 	"sideEffects": false,
 	"scripts": {
 		"build": "eslint && pnpm test:ci && pnpm test:ci:jsdom && tsup",
