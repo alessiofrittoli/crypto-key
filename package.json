@@ -47,15 +47,14 @@
 	},
 	"sideEffects": false,
 	"scripts": {
-		"build": "eslint && pnpm test:ci && pnpm test:ci:jsdom && tsup",
+		"build": "eslint && pnpm test:ci && tsup",
 		"lint": "eslint",
 		"test": "jest --watchAll --verbose",
-		"test:jsdom": "JSDOM=true pnpm test",
 		"test:ci": "jest --ci --verbose",
-		"test:ci:jsdom": "JSDOM=true pnpm test:ci",
 		"test:jest": "pnpm test jest.test.ts",
 		"test:jest:jsdom": "JSDOM=true pnpm test:jest",
-		"test:hmac": "pnpm test hmac.test.ts"
+		"test:hmac": "pnpm test hmac.test.ts",
+		"test:scrypt": "pnpm test scrypt.test.ts"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.16.0",
