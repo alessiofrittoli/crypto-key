@@ -63,6 +63,7 @@
 		"test:ci": "jest --ci --verbose",
 		"test:jest": "pnpm test jest.test.ts",
 		"test:jest:jsdom": "JSDOM=true pnpm test:jest",
+		"test:cipher": "pnpm test cipher.test.ts",
 		"test:hash": "pnpm test hash.test.ts",
 		"test:hmac": "pnpm test hmac.test.ts",
 		"test:scrypt": "pnpm test scrypt.test.ts"
