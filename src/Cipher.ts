@@ -40,7 +40,7 @@ class Cipher
 		data	: crypto.BinaryLike,
 		secret	: crypto.BinaryLike,
 		options	: CipherEncryptDecryptOptions = {},
-	)
+	): Buffer
 	{
 		options.salt	||= Cipher.SALT_LENGTH.default
 		options.iv	||= Cipher.IV_LENGTH.default
@@ -72,7 +72,7 @@ class Cipher
 		data	: Buffer,
 		secret	: crypto.BinaryLike,
 		options	: CipherEncryptDecryptOptions = {},
-	)
+	): Buffer
 	{
 		options.salt	||= Cipher.SALT_LENGTH.default
 		options.iv	||= Cipher.IV_LENGTH.default

@@ -81,7 +81,7 @@ class Scrypt
 	 * @param	options	( Optional ) An object with configuration options. See {@link ScryptHashOptions} for avilable options.
 	 * @returns	A Buffer containing the salt (first `saltLength` bytes) followed by the derived hash.
 	 */
-	static hash( key: crypto.BinaryLike, options: ScryptHashOptions = {} )
+	static hash( key: crypto.BinaryLike, options: ScryptHashOptions = {} ): Buffer
 	{
 		options.length		||= Scrypt.HASH_LENGTH.default
 		options.saltLength	||= Scrypt.SALT_LENGTH.default
