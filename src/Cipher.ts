@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 
 
-interface CipherEncryptDecryptOptions
+interface CipherOptions
 {
 	/** The Cipher GCM algorithm to use. Default: `aes-256-gcm`. */
 	algorithm?: crypto.CipherGCMTypes
@@ -39,7 +39,7 @@ class Cipher
 	static encrypt(
 		data	: crypto.BinaryLike,
 		secret	: crypto.BinaryLike,
-		options	: CipherEncryptDecryptOptions = {},
+		options	: CipherOptions = {},
 	): Buffer
 	{
 		options.salt	||= Cipher.SALT_LENGTH.default
@@ -71,7 +71,7 @@ class Cipher
 	static decrypt(
 		data	: Buffer,
 		secret	: crypto.BinaryLike,
-		options	: CipherEncryptDecryptOptions = {},
+		options	: CipherOptions = {},
 	): Buffer
 	{
 		options.salt	||= Cipher.SALT_LENGTH.default
