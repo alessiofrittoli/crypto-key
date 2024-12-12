@@ -20,7 +20,7 @@ class Hash
 	static digest(
 		string		: crypto.BinaryLike,
 		algorithm	: Algo.Hash | Algo.OtherHash = 'SHA-256',	
-	)
+	): Buffer
 	{
 		return (
 			crypto
