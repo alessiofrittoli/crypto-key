@@ -34,6 +34,11 @@
 			"import": "./dist/index.mjs",
 			"require": "./dist/index.js"
 		},
+		"./Cipher": {
+			"types": "./dist/Cipher.d.ts",
+			"import": "./dist/Cipher.mjs",
+			"require": "./dist/Cipher.js"
+		},
 		"./Hash": {
 			"types": "./dist/Hash.d.ts",
 			"import": "./dist/Hash.mjs",
