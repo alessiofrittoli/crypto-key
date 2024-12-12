@@ -1,5 +1,4 @@
-import { randomBytes, scryptSync, timingSafeEqual } from 'crypto'
-import type { BinaryLike, ScryptOptions as CryptoScryptOptions } from 'crypto'
+import crypto from 'crypto'
 
 /**
  * Scrypt algorithm customization options.
@@ -25,7 +24,7 @@ import type { BinaryLike, ScryptOptions as CryptoScryptOptions } from 'crypto'
  * | High security               | `65536`    | `16`            | `1`                   | 64 MB    |
  * | Limited resources           | `8192`     | `4`             | `1`                   | 16 MB    |
  */
-export interface ScryptOptions extends CryptoScryptOptions
+export interface ScryptOptions extends crypto.ScryptOptions
 {
 	/** Computational cost factor. Must be a power of 2. Higher values increase security but are slower. */
 	cost?: number
@@ -43,32 +42,14 @@ export interface ScryptOptions extends CryptoScryptOptions
 	p?: number
 }
 
-/** `Scrypt.hash()` input data. */
-interface ScryptHashInput
+
+interface ScryptHashOptions
 {
-	/** The key to hash. Can be a string, Buffer, or TypedArray. */
-	key: BinaryLike
 	/** The hash length. Minimum: `16`, Maximum: `256`. Default: `64`. */
 	length?: number
 	/** The salt length. Minimum: `16`, Maximum: `64`. Default: `32`. */
 	saltLength?: number
 	/** Scrypt algorithm customization options. See {@link ScryptOptions} for available options. */
-	options?: ScryptOptions
-}
-
-
-/** `Scrypt.isValid()` input data. */
-interface ScryptValidateInput
-{
-	/** The key to compare. */
-	key: BinaryLike
-	/** The hash string. */
-	hash: Buffer
-	/** ( Optional ) The hash length previously used within {@link Scrypt.hash}. Minimum `16`. Maximum `256`. Default: `64`. */
-	length?: number
-	/** ( Optional ) The salt length previously used within {@link Scrypt.hash}. Minimum `16`. Maximum `64`. Default: `32`. */
-	saltLength?: number
-	/** ( Optional ) Scrypt algorithm customization options previously used within {@link Scrypt.hash}. See {@link ScryptOptions} for available options. */
 	options?: ScryptOptions
 }
 
@@ -96,17 +77,18 @@ class Scrypt
 	/**
 	 * Hash string using the scrypt key derivation algorithm.
 	 * 
-	 * @param data An object with configuration options. See {@link ScryptHashInput} for avilable options.
+	 * @param	key		The key to hash. Can be a string, Buffer, or TypedArray.
+	 * @param	options	( Optional ) An object with configuration options. See {@link ScryptHashOptions} for avilable options.
 	 * @returns	A Buffer containing the salt (first `saltLength` bytes) followed by the derived hash.
 	 */
-	static hash( data: ScryptHashInput )
+	static hash( key: crypto.BinaryLike, options: ScryptHashOptions = {} )
 	{
-		data.length		||= Scrypt.HASH_LENGTH.default
-		data.saltLength	||= Scrypt.SALT_LENGTH.default
-		data.length		= Math.min( Math.max( data.length, Scrypt.HASH_LENGTH.min ), Scrypt.HASH_LENGTH.max )
-		data.saltLength	= Math.min( Math.max( data.saltLength, Scrypt.SALT_LENGTH.min ), Scrypt.SALT_LENGTH.max )
-		const salt		= randomBytes( data.saltLength )
-		const buffer	= scryptSync( data.key, salt, data.length, data.options )
+		options.length		||= Scrypt.HASH_LENGTH.default
+		options.saltLength	||= Scrypt.SALT_LENGTH.default
+		options.length		= Math.min( Math.max( options.length, Scrypt.HASH_LENGTH.min ), Scrypt.HASH_LENGTH.max )
+		options.saltLength	= Math.min( Math.max( options.saltLength, Scrypt.SALT_LENGTH.min ), Scrypt.SALT_LENGTH.max )
+		const salt			= crypto.randomBytes( options.saltLength )
+		const buffer		= crypto.scryptSync( key, salt, options.length, options.options )
 
 		return (
 			Buffer.concat( [ salt, buffer ] )
@@ -118,38 +100,40 @@ class Scrypt
 	/**
 	 * Compare key with hash.
 	 * 
-	 * @param data An object with configuration options. See {@link ScryptValidateInput} for avilable options.
+	 * @param key		The key to compare.
+	 * @param hash		The hash string.
+	 * @param options	( Optional ) An object with configuration options. See {@link ScryptHashOptions} for avilable options.
 	 * 
 	 * @usage ```ts
 	 * const password		= 'your-strong-password'
-	 * const secretKey		= Scrypt.hash( { key: password, length: 16 } ) // store in database.
-	 * const isValidPassword	= Scrypt.isValid( { key: password, hash: secretKey, length: 16 } )
+	 * const secretKey		= Scrypt.hash( password, { length: 16 } ) // store in database.
+	 * const isValidPassword	= Scrypt.isValid( password, secretKey { length: 16 } )
 	 * ```
 	 * @returns	True if key is valid, false otherwise. Throw error if no secret or salt has been found in the hash.
 	 */
-	static isValid( data: ScryptValidateInput )
+	static isValid( key: crypto.BinaryLike, hash: Buffer, options: ScryptHashOptions = {} )
 	{
 
-		if ( ! data.hash ) return false
-		if ( data.hash.length <= 0 ) return false
+		if ( ! hash ) return false
+		if ( hash.length <= 0 ) return false
 
-		data.length		||= Scrypt.HASH_LENGTH.default
-		data.saltLength	||= Scrypt.SALT_LENGTH.default
-		data.length		= Math.min( Math.max( data.length, Scrypt.HASH_LENGTH.min ), Scrypt.HASH_LENGTH.max )
-		data.saltLength	= Math.min( Math.max( data.saltLength, Scrypt.SALT_LENGTH.min ), Scrypt.SALT_LENGTH.max )
-		const salt		= data.hash.subarray( 0, data.saltLength )
-		data.hash		= data.hash.subarray( data.saltLength )
+		options.length		||= Scrypt.HASH_LENGTH.default
+		options.saltLength	||= Scrypt.SALT_LENGTH.default
+		options.length		= Math.min( Math.max( options.length, Scrypt.HASH_LENGTH.min ), Scrypt.HASH_LENGTH.max )
+		options.saltLength	= Math.min( Math.max( options.saltLength, Scrypt.SALT_LENGTH.min ), Scrypt.SALT_LENGTH.max )
+		const salt			= hash.subarray( 0, options.saltLength )
+		hash				= hash.subarray( options.saltLength )
 
-		if ( data.hash.length !== data.length ) {
+		if ( hash.length !== options.length ) {
 			return false
 		}
 
 		try {
 
-			const buffer = scryptSync( data.key, salt, data.length, data.options )
+			const buffer = crypto.scryptSync( key, salt, options.length, options.options )
 
 			return (
-				timingSafeEqual( data.hash, buffer )
+				crypto.timingSafeEqual( hash, buffer )
 			)
 
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
