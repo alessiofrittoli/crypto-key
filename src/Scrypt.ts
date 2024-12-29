@@ -43,7 +43,7 @@ export interface ScryptOptions extends crypto.ScryptOptions
 }
 
 
-interface ScryptHashOptions
+export interface ScryptHashOptions
 {
 	/** The hash length. Minimum: `16`, Maximum: `256`. Default: `64`. */
 	length?: number
@@ -58,7 +58,7 @@ interface ScryptHashOptions
  * Scrypt Utility static class.
  * 
  */
-class Scrypt
+export class Scrypt
 {
 	private static SALT_LENGTH = {
 		min		: 16,
@@ -145,6 +145,3 @@ class Scrypt
 
 	}
 }
-
-
-export default Scrypt

@@ -1,12 +1,12 @@
-import Hmac from '@/Hmac'
+import { Hmac } from '@/Hmac'
 import type Algo from '@alessiofrittoli/crypto-algorithm/types'
 
-const tests: ({
+const tests: ( {
 	input	: string
 	secret	: string
 	hash	: Algo.Hash
 	output	: string
-})[] = [
+} )[] = [
 	{
 		input	: 'message',
 		secret	: 'secretkey',

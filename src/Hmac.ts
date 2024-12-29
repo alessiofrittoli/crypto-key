@@ -3,7 +3,7 @@ import type stream from 'stream'
 import type Algo from '@alessiofrittoli/crypto-algorithm/types'
 import { bufferEquals } from '@alessiofrittoli/crypto-buffer/common'
 
-type HmacReturnType<
+export type HmacReturnType<
 	T extends BufferEncoding | undefined = undefined
 > = ( T extends BufferEncoding ? string : Buffer )
 
@@ -12,7 +12,7 @@ type HmacReturnType<
  * Hmac Utility static class.
  * 
  */
-class Hmac
+export class Hmac
 {
 	/**
 	 * Generate Hash-based message authentication code.
@@ -82,6 +82,3 @@ class Hmac
 		return bufferEquals( hash, target )
 	}
 }
-
-
-export default Hmac

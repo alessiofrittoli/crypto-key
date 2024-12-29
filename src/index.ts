@@ -1,6 +1,6 @@
-export { default as Cipher } from './Cipher'
-export { default as Hash } from './Hash'
-export { default as Hmac } from './Hmac'
-export { default as Scrypt } from './Scrypt'
+export { Cipher } from './Cipher'
+export { Hash } from './Hash'
+export { Hmac } from './Hmac'
+export { Scrypt } from './Scrypt'
 
 export * from './utils'

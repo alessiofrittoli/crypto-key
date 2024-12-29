@@ -1,4 +1,4 @@
-import Scrypt, { type ScryptOptions } from '@/Scrypt'
+import { Scrypt, type ScryptOptions } from '@/Scrypt'
 
 const password = 'verystrongpassword'
 const options: ScryptOptions = {

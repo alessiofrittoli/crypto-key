@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 
 
-interface CipherOptions
+export interface CipherOptions
 {
 	/** The Cipher GCM algorithm to use. Default: `aes-256-gcm`. */
 	algorithm?: crypto.CipherGCMTypes
@@ -12,7 +12,7 @@ interface CipherOptions
 }
 
 
-class Cipher
+export class Cipher
 {
 	private static SALT_LENGTH = {
 		min		: 16,
@@ -133,5 +133,3 @@ class Cipher
 		}
 	}
 }
-
-export default Cipher

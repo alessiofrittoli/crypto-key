@@ -2,7 +2,7 @@ import crypto from 'crypto'
 import type Algo from '@alessiofrittoli/crypto-algorithm/types'
 import { bufferEquals } from '@alessiofrittoli/crypto-buffer/common'
 
-class Hash
+export class Hash
 {
 	/**
 	 * Hash string.
@@ -53,6 +53,3 @@ class Hash
 		)
 	}
 }
-
-
-export default Hash
