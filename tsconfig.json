@@ -8,36 +8,18 @@
 		"declaration": true,
 		"isolatedModules": true,
 		"outDir": "dist",
-		"target": "ES2020",
-		"lib": [
-			"dom",
-			"dom.iterable",
-			"esnext"
-		],
-		"allowJs": true,
-		"module": "ESNext",
-		"moduleResolution": "bundler",
+		"target": "ESNext",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"skipLibCheck": true,
 		"downlevelIteration": true,
 		"noUncheckedIndexedAccess": true,
 		"strictPropertyInitialization": false,
 		"resolveJsonModule": true,
-		"jsx": "preserve",
-		"incremental": true,
-		"tsBuildInfoFile": ".tsbuildinfo",
 		"paths": {
-			"@/*": [
-				"./src/*"
-			]
-		}
+			"@/*": [ "./src/*" ]
+		},
 	},
-	"include": [
-		"src",
-		"__tests__",
-		"alessiofrittoli-env.d.ts"
-	],
-	"exclude": [
-		"node_modules",
-		"dist"
-	]
+	"include": [ "src", "__tests__" ],
+	"exclude": [ "node_modules" ]
 }

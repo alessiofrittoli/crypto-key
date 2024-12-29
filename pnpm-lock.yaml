@@ -14,9 +14,6 @@ importers:
       '@alessiofrittoli/crypto-buffer':
         specifier: ^2.0.1
         version: 2.0.1
-      '@alessiofrittoli/type-utils':
-        specifier: ^1.5.0
-        version: 1.5.0
       concurrently:
         specifier: ^9.1.1
         version: 9.1.1
@@ -69,20 +66,11 @@ importers:
 
 packages:
 
-  '@alessiofrittoli/chain-functions@2.0.0':
-    resolution: {integrity: sha512-6Qm/F813NvqbnhMHtJWZnPKKrOqSC+pZzOxz8g2XC5OoZZ2fWcYvfE3q8aeAx/tKoWelRVr8GJm6vF9vwGTprw==}
-
   '@alessiofrittoli/crypto-algorithm@1.2.0':
     resolution: {integrity: sha512-j6OQzQqyy4gI/5tNzTFheDNgTfEuXXYUiTDOBZtQ7thExhRakwVr6V4futacpVyjEdHujAQFGV0Mvz3nCjpVUA==}
 
   '@alessiofrittoli/crypto-buffer@2.0.1':
     resolution: {integrity: sha512-hTFnVRawDlDJUkY0fTgEbsbCP+lQ6cXqAyzrVp/dn7AB+neWb1JMzLJRGC9kiImPhmuEsW3/R+d/JyXSU76msA==}
-
-  '@alessiofrittoli/node-scripts@2.2.1':
-    resolution: {integrity: sha512-VP9pUyrPhudlv/1UOxb1BfisKOSAAl/0H8beM5Udn3ddMHPVbrP4ul1rLqDbHWsFzePmpOiOsvOpEAsj2YPnWA==}
-
-  '@alessiofrittoli/type-utils@1.5.0':
-    resolution: {integrity: sha512-UCc2S8PCYaWS9uaKwF3k8MkU1vPqulnGk08NFDBi+dmjFQvyGCkG1mkSvfQjjXz0XOzh5zgn+mVqP+fZLF2CcQ==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -2425,18 +2413,9 @@ packages:
 
 snapshots:
 
-  '@alessiofrittoli/chain-functions@2.0.0': {}
-
   '@alessiofrittoli/crypto-algorithm@1.2.0': {}
 
   '@alessiofrittoli/crypto-buffer@2.0.1': {}
-
-  '@alessiofrittoli/node-scripts@2.2.1': {}
-
-  '@alessiofrittoli/type-utils@1.5.0':
-    dependencies:
-      '@alessiofrittoli/chain-functions': 2.0.0
-      '@alessiofrittoli/node-scripts': 2.2.1
 
   '@ampproject/remapping@2.3.0':
     dependencies:
