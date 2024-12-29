@@ -1,5 +1,5 @@
 import { Cipher } from '@/Cipher'
-import { bufferEquals } from '@alessiofrittoli/crypto-buffer'
+import { bufferEquals } from '@alessiofrittoli/crypto-buffer/common'
 
 const dataToEncrypt	= 'my TOP-SECRET message'
 const password		= 'verystrong-password'
