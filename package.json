@@ -103,6 +103,7 @@
 	"dependencies": {
 		"@alessiofrittoli/crypto-algorithm": "^1.2.0",
 		"@alessiofrittoli/crypto-buffer": "^2.0.1",
+		"@alessiofrittoli/type-utils": "^1.5.0",
 		"concurrently": "^9.1.1",
 		"http-server": "^14.1.1"
 	}
