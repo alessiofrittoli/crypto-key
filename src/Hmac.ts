@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 import type stream from 'stream'
-import type Algo from '@alessiofrittoli/crypto-algorithm/types'
+import type { Algo } from '@alessiofrittoli/crypto-algorithm/types'
 import { bufferEquals } from '@alessiofrittoli/crypto-buffer/common'
 
 export type HmacReturnType<

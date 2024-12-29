@@ -1,5 +1,5 @@
 import { Hmac } from '@/Hmac'
-import type Algo from '@alessiofrittoli/crypto-algorithm/types'
+import type { Algo } from '@alessiofrittoli/crypto-algorithm/types'
 
 const tests: ( {
 	input	: string

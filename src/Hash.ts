@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import type Algo from '@alessiofrittoli/crypto-algorithm/types'
+import type { Algo } from '@alessiofrittoli/crypto-algorithm/types'
 import { bufferEquals } from '@alessiofrittoli/crypto-buffer/common'
 
 export class Hash

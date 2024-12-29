@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import type Algo from '@alessiofrittoli/crypto-algorithm/types'
+import type { Algo } from '@alessiofrittoli/crypto-algorithm/types'
 import { Hash } from '@/Hash'
 
 const password	= 'verystrongpassword'
