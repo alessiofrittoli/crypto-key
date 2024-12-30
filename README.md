@@ -9,8 +9,17 @@ Version 1.0.0
 - [Getting started](#getting-started)
 - [API Reference](#api-reference)
 	- [`Hash` Class](#hash-class)
+		- [`Hash.digest()`](#hashdigest)
+		- [`Hash.isValid()`](#hashisvalid)
+		- [Example Usage](#example-usage)
 	- [`Hmac` Class](#hmac-class)
+		- [`Hmac.digest()`](#hmacdigest)
+		- [`Hmac.isValid()`](#hmacisvalid)
+		- [Example Usage](#example-usage-1)
 	- [`Cipher` Class](#cipher-class)
+		- [`Cipher.decrypt()`](#cipherdecrypt)
+		- [`Cipher.encrypt()`](#cipherencrypt)
+		- [Example Usage](#example-usage-2)
 	- [`Scrypt` Class](#scrypt-class)
 - [Security](#security)
 - [Credits](#made-with-)
@@ -124,7 +133,7 @@ The `Hmac` class provides utility methods for generating and validating HMAC (Ha
 
 ##### Methods
 
-###### `Hash.digest()`
+###### `Hmac.digest()`
 
 Generates a Hash-based Message Authentication Code (HMAC) for a given message using a secret key.
 
@@ -149,7 +158,7 @@ The resulting HMAC value. If `encoding` is specified, the output is a string in 
 
 ---
 
-###### `Hash.isValid()`
+###### `Hmac.isValid()`
 
 Validates a given HMAC value against a message and secret key.
 
@@ -186,7 +195,6 @@ import { Hmac } from '@alessiofrittoli/crypto-key/Hmac'
 
 console.log(
 	Hmac.digest( 'raw string value', 'mysecretkey', 'SHA-256', 'hex' )
-		.toString( 'hex' )
 ) // Outputs the HMAC value in HEX format.
 ```
 
@@ -210,11 +218,111 @@ console.log(
 
 #### `Cipher` Class
 
+The `Cipher` class provides utility methods for encrypting and decrypting data using AES-GCM algorithms with customizable options for salt and initialization vector (IV) lengths.
+
+##### Interfaces
+
+###### `CipherOptions`
+
+Defines the optional configuration for the `Cipher` class methods.
+
+<details>
+<summary>Properties</summary>
+
+| Property    | Type                    | Description |
+|-------------|-------------------------|-------------|
+| `algorithm` | `crypto.CipherGCMTypes` | The AES-GCM algorithm to use. |
+| `salt`      | `number`                | The salt length. Must be between `16` and `64`. |
+| `iv`        | `number`                | The IV (Initialization Vector) length. Must be between `16` and `32`. |
+
+</details>
+
+---
+
 ##### Methods
+
+###### `Cipher.encrypt()`
+
+Encrypts data using the AES-GCM algorithm.
+
+<details>
+<summary>Parameters</summary>
+
+| Parameter           | Type                    | Default       | Description                                       |
+|---------------------|-------------------------|---------------|---------------------------------------------------|
+| `data`              | `crypto.BinaryLike`     | -             | The data to encrypt.                              |
+| `secret`            | `crypto.BinaryLike`     | -             | The secret key to use for data encryption.        |
+| `options`           | `CipherOptions`         | -             | (Optional) Additional options for encryption.     |
+| `options.algorithm` | `crypto.CipherGCMTypes` | `aes-256-gcm` | (Optional) The AES-GCM algorithm to use.          |
+| `options.salt`      | `number`                | `32`          | (Optional) The salt length.                       |
+| `options.iv`        | `number`                | `16`          | (Optional) The IV (Initialization Vector) length. |
+
+</details>
+
+**Returns**
+
+Type: `Buffer`
+
+The encrypted data `Buffer`.
+
+---
+
+###### `Cipher.decrypt()`
+
+Decrypts data encrypted using the [`Cipher.encrypt()`](#cipherencrypt) method.
+
+<details>
+<summary>Parameters</summary>
+
+| Parameter           | Type                    | Default       | Description                                       |
+|---------------------|-------------------------|---------------|---------------------------------------------------|
+| `data`              | `Buffer`                | -             | The encrypted data to decrypt.                    |
+| `secret`            | `crypto.BinaryLike`     | -             | The secret key used to encrypt the data.          |
+| `options`           | `CipherOptions`         | -             | (Optional) Additional options. Must match those used for encryption. |
+| `options.algorithm` | `crypto.CipherGCMTypes` | `aes-256-gcm` | (Optional) The AES-GCM algorithm to use.          |
+| `options.salt`      | `number`                | `32`          | (Optional) The salt length.                       |
+| `options.iv`        | `number`                | `16`          | (Optional) The IV (Initialization Vector) length. |
+
+</details>
+
+**Returns**
+
+Type: `Buffer`
+
+The decrypted data `Buffer`.
 
 ---
 
 ##### Example Usage
+
+###### Encrypting Data
+
+```ts
+import { Cipher } from '@alessiofrittoli/crypto-key'
+// or
+import { Cipher } from '@alessiofrittoli/crypto-key/Cipher'
+
+console.log(
+	Cipher.encrypt( 'My data to encrypt', 'mysecretkey' )
+		.toString( 'hex' )
+) // Outputs encrypted data in HEX format.
+```
+
+###### Decrypting Data
+
+```ts
+import { Cipher } from '@alessiofrittoli/crypto-key'
+// or
+import { Cipher } from '@alessiofrittoli/crypto-key/Cipher'
+
+const secret	= 'mysecretkey'
+const encrypted	= Cipher.encrypt( 'My data to encrypt', secret )
+
+console.log(
+	Cipher.decrypt( encrypted, secret )
+		.toString()
+) // Outputs: 'My data to encrypt'
+```
 
 ---
 
