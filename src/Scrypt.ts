@@ -1,3 +1,4 @@
+import { coerceToUint8Array, CoerceToUint8ArrayInput } from '@alessiofrittoli/crypto-buffer'
 import crypto from 'crypto'
 
 /**
@@ -5,7 +6,7 @@ import crypto from 'crypto'
  * 
  * ### Available options:
  * 
- * | Parameter         | Default   | Description                                                                                      |
+ * | Property          | Default   | Description                                                                                      |
  * |-------------------|-----------|--------------------------------------------------------------------------------------------------|
  * | `cost`            | `16384`   | Computational cost factor. Must be a power of 2. Higher values increase security but are slower. |
  * | `blockSize`       | `8`       | Memory cost factor. Higher values increase memory usage, improving security against GPU attacks. |
@@ -107,15 +108,17 @@ export class Scrypt
 	 * @usage ```ts
 	 * const password		= 'your-strong-password'
 	 * const secretKey		= Scrypt.hash( password, { length: 16 } ) // store in database.
-	 * const isValidPassword	= Scrypt.isValid( password, secretKey { length: 16 } )
+	 * const isValidPassword	= Scrypt.isValid( password, secretKey, { length: 16 } )
 	 * ```
 	 * @returns	True if key is valid, false otherwise. Throw error if no secret or salt has been found in the hash.
 	 */
-	static isValid( key: crypto.BinaryLike, hash: Buffer, options: ScryptHashOptions = {} )
+	static isValid( key: crypto.BinaryLike, hash: CoerceToUint8ArrayInput, options: ScryptHashOptions = {} )
 	{
-
+		
 		if ( ! hash ) return false
-		if ( hash.length <= 0 ) return false
+		
+		let _hash = coerceToUint8Array( hash )
+		if ( _hash.length <= 0 ) return false
 		
 		try {
 
@@ -123,17 +126,17 @@ export class Scrypt
 			options.saltLength	||= Scrypt.SALT_LENGTH.default
 			options.length		= Math.min( Math.max( options.length, Scrypt.HASH_LENGTH.min ), Scrypt.HASH_LENGTH.max )
 			options.saltLength	= Math.min( Math.max( options.saltLength, Scrypt.SALT_LENGTH.min ), Scrypt.SALT_LENGTH.max )
-			const salt			= hash.subarray( 0, options.saltLength )
-			hash				= hash.subarray( options.saltLength )
+			const salt			= _hash.subarray( 0, options.saltLength )
+			_hash				= _hash.subarray( options.saltLength )
 	
-			if ( hash.length !== options.length ) {
+			if ( _hash.length !== options.length ) {
 				return false
 			}
 
 			const buffer = crypto.scryptSync( key, salt, options.length, options.options )
 
 			return (
-				crypto.timingSafeEqual( hash, buffer )
+				crypto.timingSafeEqual( _hash, buffer )
 			)
 
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars

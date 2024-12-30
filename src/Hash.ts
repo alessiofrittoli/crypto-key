@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 import type { Algo } from '@alessiofrittoli/crypto-algorithm/types'
 import { bufferEquals } from '@alessiofrittoli/crypto-buffer/common'
-import type { ToDataViewInput } from '@alessiofrittoli/crypto-buffer/toDataView'
+import type { CoerceToUint8ArrayInput } from '@alessiofrittoli/crypto-buffer'
 
 export class Hash
 {
@@ -36,7 +36,7 @@ export class Hash
 	 */
 	static isValid(
 		input		: crypto.BinaryLike,
-		digest		: ToDataViewInput,
+		digest		: CoerceToUint8ArrayInput,
 		algorithm	: Algo.Hash | Algo.OtherHash = 'SHA-256',	
 	)
 	{

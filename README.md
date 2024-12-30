@@ -9,18 +9,30 @@ Version 1.0.0
 - [Getting started](#getting-started)
 - [API Reference](#api-reference)
 	- [`Hash` Class](#hash-class)
-		- [`Hash.digest()`](#hashdigest)
-		- [`Hash.isValid()`](#hashisvalid)
+		- [Methods](#methods)
+			- [`Hash.digest()`](#hashdigest)
+			- [`Hash.isValid()`](#hashisvalid)
 		- [Example Usage](#example-usage)
 	- [`Hmac` Class](#hmac-class)
-		- [`Hmac.digest()`](#hmacdigest)
-		- [`Hmac.isValid()`](#hmacisvalid)
+		- [Methods](#methods-1)
+			- [`Hmac.digest()`](#hmacdigest)
+			- [`Hmac.isValid()`](#hmacisvalid)
 		- [Example Usage](#example-usage-1)
 	- [`Cipher` Class](#cipher-class)
-		- [`Cipher.decrypt()`](#cipherdecrypt)
-		- [`Cipher.encrypt()`](#cipherencrypt)
+		- [Cipher Type Interfaces](#cipher-type-interfaces)
+			- [CipherOptions](#cipheroptions)
+		- [Methods](#methods-2)
+			- [`Cipher.decrypt()`](#cipherdecrypt)
+			- [`Cipher.encrypt()`](#cipherencrypt)
 		- [Example Usage](#example-usage-2)
 	- [`Scrypt` Class](#scrypt-class)
+		- [Scrypt Type Interfaces](#scrypt-type-interfaces)
+			- [ScryptOptions](#scryptoptions)
+			- [ScryptHashOptions](#scrypthashoptions)
+		- [Methods](#methods-3)
+			- [`Scrypt.hash()`](#scrypthash)
+			- [`Scrypt.isValid()`](#scryptisvalid)
+		- [Example Usage](#example-usage-3)
 - [Security](#security)
 - [Credits](#made-with-)
 
@@ -83,7 +95,7 @@ Compares input data with a hashed value to verify if they match.
 | Parameter   | Type                          | Default   | Description                               |
 |-------------|-------------------------------|-----------|-------------------------------------------|
 | `input`     | `crypto.BinaryLike`           | -         | The raw input data.                       |
-| `digest`    | `ToDataViewInput`             | -         | The hash digest value to compare against. |
+| `digest`    | `CoerceToUint8ArrayInput`     | -         | The hash digest value to compare against. |
 | `algorithm` | `Algo.Hash \| Algo.OtherHash` | 'SHA-256' | (Optional) The hash algorithm previously used while generating the `hashed` data. |
 
 </details>
@@ -167,7 +179,7 @@ Validates a given HMAC value against a message and secret key.
 
 | Parameter   | Type                | Default   | Description                                     |
 |-------------|---------------------|-----------|-------------------------------------------------|
-| `digest`    | `ToDataViewInput`   | -         | The HMAC digest to validate.                    |
+| `digest`    | `CoerceToUint8ArrayInput` | -   | The HMAC digest to validate.                    |
 | `message`   | `crypto.BinaryLike` | -         | The original message used to generate the HMAC. |
 | `secret`    | `crypto.BinaryLike \| crypto.KeyObject` | - | The secret key used for generating the HMAC. |
 | `algorithm` | `Algo.Hash`         | 'SHA-256' | (Optional) The hash algorithm used for generating the HMAC. |
@@ -220,7 +232,7 @@ console.log(
 
 The `Cipher` class provides utility methods for encrypting and decrypting data using AES-GCM algorithms with customizable options for salt and initialization vector (IV) lengths.
 
-##### Interfaces
+##### Cipher Type Interfaces
 
 ###### `CipherOptions`
 
@@ -328,11 +340,138 @@ console.log(
 
 #### `Scrypt` Class
 
+The `Scrypt` class provides methods for hashing and securely comparing keys using the `scrypt` key derivation algorithm.\
+It supports customizable options for computational cost, memory usage, and parallelization to balance security and performance.
+
+##### Scrypt Type Interfaces
+
+###### `ScryptOptions`
+
+Defines customization options for the `scrypt` algorithm.
+
+<details>
+<summary>Properties</summary>
+
+| Property          | Type     | Default   | Description |
+|-------------------|----------|-----------|-------------|
+| `cost`            | `number` | `16384`   | Computational cost factor. Must be a power of 2. Higher values increase security but are slower. |
+| `blockSize`       | `number` | `8`       | Memory cost factor. Higher values increase memory usage, improving security against GPU attacks. |
+| `parallelization` | `number` | `1`       | Parallelization factor. Determines how many threads can be used. |
+| `maxmem`          | `number` | `32 * 1024 * 1024` (32MB) | Maximum memory (in bytes) to be used during key derivation. |
+| `N`               | `number` | `16384`   | Alias for `cost`. |
+| `r`               | `number` | `8`       | Alias for `blockSize`. |
+| `p`               | `number` | `1`       | Alias for `parallelization`. |
+
+</details>
+
+<details>
+<summary>Suggested options</summary>
+
+| Scope                       | `cost` (N) | `blockSize` (r) | `parallelization` (p) | `maxmem` |
+|-----------------------------|------------|-----------------|-----------------------|----------|
+| Standard security (default) | `16384`    | `8`             | `1`                   | 32 MB    |
+| High security               | `65536`    | `16`            | `1`                   | 64 MB    |
+| Limited resources           | `8192`     | `4`             | `1`                   | 16 MB    |
+
+</details>
+
+---
+
+###### `ScryptHashOptions`
+
+Defines options for the `hash` and `isValid` methods.
+
+<details>
+<summary>Properties</summary>
+
+| Property     | Type            | Default   | Description |
+|--------------|-----------------|-----------|-------------|
+| `length`     | `number`        | `64`      | The hash length. Must be between `16` and `256`. |
+| `saltLength` | `number`        | `32`      | The salt length. Must be between `16` and `64`. |
+| `options`    | `ScryptOptions` | See above | Custom options for the `scrypt` algorithm. |
+
+</details>
+
+---
+
 ##### Methods
+
+###### `Scrypt.hash()`
+
+Generates a hash for a given key using the `scrypt` key derivation algorithm.
+
+<details>
+<summary>Parameters</summary>
+
+| Parameter | Type                | Default | Description |
+|-----------|---------------------|---------|-------------|
+| `key`     | `crypto.BinaryLike` | -       | The key to hash. |
+| `options` | `ScryptHashOptions` | -       | (Optional) Configuration options for hashing. |
+
+</details>
+
+**Returns**
+
+Type: `Buffer`
+
+A Buffer containing the salt (first saltLength bytes) followed by the derived hash.
+
+---
+
+###### `Scrypt.isValid()`
+
+Validates the given `key` with the given `hash`.
+
+<details>
+<summary>Parameters</summary>
+
+| Parameter | Type                | Default | Description |
+|-----------|---------------------|---------|-------------|
+| `key`     | `crypto.BinaryLike` | -       | The key to validate. |
+| `hash`    | `CoerceToUint8ArrayInput` | - | The hash to compare against. |
+| `options` | `ScryptHashOptions` | -       | (Optional) Configuration options. Must match those used for hashing. |
+
+</details>
+
+**Returns**
+
+Type: `boolean`
+
+`true` if the key is valid, `false` otherwise.
 
 ---
 
 ##### Example Usage
+
+###### Hashing a Key
+
+```ts
+import { Scrypt } from '@alessiofrittoli/crypto-key'
+// or
+import { Scrypt } from '@alessiofrittoli/crypto-key/Scrypt'
+
+console.log(
+	Scrypt.hash( 'user-provided-password' )
+		.toString( 'hex' )
+) // Outputs the hash in HEX format.
+```
+
+###### Validating a Key
+
+```ts
+import { Scrypt } from '@alessiofrittoli/crypto-key'
+// or
+import { Scrypt } from '@alessiofrittoli/crypto-key/Scrypt'
+
+import { Scrypt } from './Scrypt';
+
+const password	= 'user-provided-password';
+const hash		= Scrypt.hash( password, { length: 32, saltLength: 16 } )
+
+console.log(
+	Scrypt.isValid( password, hash, { length: 32, saltLength: 16 } )
+) // Outputs: true
+```
 
 ---
 

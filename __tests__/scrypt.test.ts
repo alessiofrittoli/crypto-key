@@ -93,7 +93,7 @@ describe( 'Scrypt.isValid()', () => {
 
 	it( 'returns `false` if an error occurs during validation', () => {
 		// @ts-expect-error negative testing
-		expect( Scrypt.isValid( '123', '123' ) )
+		expect( Scrypt.isValid( {}, {} ) )
 			.toBe( false )
 	} )
 	

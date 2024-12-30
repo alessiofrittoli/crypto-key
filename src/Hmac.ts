@@ -2,7 +2,7 @@ import crypto from 'crypto'
 import type stream from 'stream'
 import type { Algo } from '@alessiofrittoli/crypto-algorithm/types'
 import { bufferEquals } from '@alessiofrittoli/crypto-buffer/common'
-import { ToDataViewInput } from '@alessiofrittoli/crypto-buffer/toDataView'
+import type { CoerceToUint8ArrayInput } from '@alessiofrittoli/crypto-buffer'
 
 export type HmacReturnType<
 	T extends BufferEncoding | undefined = undefined
@@ -60,7 +60,7 @@ export class Hmac
 	 * @returns	True if the given hash is valid, false otherwise.
 	 */
 	static isValid(
-		digest		: ToDataViewInput,
+		digest		: CoerceToUint8ArrayInput,
 		message		: crypto.BinaryLike,
 		secret		: crypto.BinaryLike | crypto.KeyObject,
 		algorithm?	: Algo.Hash,
