@@ -120,11 +120,91 @@ console.log( isValid ) // Outputs: `true`
 
 #### `Hmac` Class
 
+The `Hmac` class provides utility methods for generating and validating HMAC (Hash-based Message Authentication Code) values using cryptographic algorithms.
+
 ##### Methods
+
+###### `Hash.digest()`
+
+Generates a Hash-based Message Authentication Code (HMAC) for a given message using a secret key.
+
+<details>
+<summary>Parameters</summary>
+
+| Parameter   | Type                | Default   | Description                                     |
+|-------------|---------------------|-----------|-------------------------------------------------|
+| `message`   | `crypto.BinaryLike` | -         | The data to be hashed.                          |
+| `secret`    | `crypto.BinaryLike \| crypto.KeyObject` | - | The secret key to use for generating the HMAC. |
+| `algorithm` | `Algo.Hash`         | 'SHA-256' | (Optional) The cryptographic hash algorithm.    |
+| `encoding`  | `BufferEncoding`    | -         | (Optional) The encoding for the output string.  |
+| `options`   | `stream.TransformOptions` | -   | (Optional) Additional stream transform options. |
+
+</details>
+
+**Returns**
+
+Type: `HmacReturnType<T>`
+
+The resulting HMAC value. If `encoding` is specified, the output is a string in the specified encoding; otherwise, a `Buffer`.
+
+---
+
+###### `Hash.isValid()`
+
+Validates a given HMAC value against a message and secret key.
+
+<details>
+<summary>Parameters</summary>
+
+| Parameter   | Type                | Default   | Description                                     |
+|-------------|---------------------|-----------|-------------------------------------------------|
+| `digest`    | `ToDataViewInput`   | -         | The HMAC digest to validate.                    |
+| `message`   | `crypto.BinaryLike` | -         | The original message used to generate the HMAC. |
+| `secret`    | `crypto.BinaryLike \| crypto.KeyObject` | - | The secret key used for generating the HMAC. |
+| `algorithm` | `Algo.Hash`         | 'SHA-256' | (Optional) The hash algorithm used for generating the HMAC. |
+| `encoding`  | `BufferEncoding`    | -         | (Optional) The encoding used to generate the hash output. |
+| `options`   | `stream.TransformOptions` | -   | (Optional) Additional stream transform options used for generating the HMAC. |
+
+</details>
+
+**Returns**
+
+Type: `boolean`
+
+`true` if the provided HMAC matches the generated one. `false` otherwise.
 
 ---
 
 ##### Example Usage
+
+###### Generating an HMAC
+
+```ts
+import { Hmac } from '@alessiofrittoli/crypto-key'
+// or
+import { Hmac } from '@alessiofrittoli/crypto-key/Hmac'
+
+console.log(
+	Hmac.digest( 'raw string value', 'mysecretkey', 'SHA-256', 'hex' )
+		.toString( 'hex' )
+) // Outputs the HMAC value in HEX format.
+```
+
+###### Validating an HMAC
+
+```ts
+import { Hmac } from '@alessiofrittoli/crypto-key'
+// or
+import { Hmac } from '@alessiofrittoli/crypto-key/Hmac'
+
+const message	= 'raw string value'
+const secret	= 'mysecretkey'
+const hmac		= Hmac.digest( message, secret )
+
+console.log(
+	Hmac.isValid( hmac, message, secret )
+) // Outputs: `true`
+```
 
 ---
 
