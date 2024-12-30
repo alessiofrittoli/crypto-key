@@ -73,4 +73,26 @@ describe( 'Hmac.isValid()', () => {
 		).toBe( true )
 	} )
 
+
+	it( 'supports mixed input data types', () => {
+		/** base64url HMAC non-decoded Buffer. */
+		const hash = (
+			Buffer.from(
+				Hmac.digest( 'raw value', 'secret', undefined, 'base64url' )
+			)
+		)
+
+		expect( Hmac.isValid( hash, 'raw value', 'secret', undefined, 'base64url' ) )
+			.toBe( true )
+	} )
+
+	
+	it( 'throws a new Exception if the given hash is a string but no input encoding has been provided', () => {
+		const hash = Hmac.digest( 'raw value', 'secret' ).toString( 'base64url' )
+		expect(
+			() => Hmac.isValid( hash, 'raw value', 'secret' )
+		).toThrow( 'You must specify the encoding used during the HMAC generation.' )
+
+	} )
+
 } )
