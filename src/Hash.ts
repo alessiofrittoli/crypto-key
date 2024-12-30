@@ -1,52 +1,45 @@
 import crypto from 'crypto'
 import type { Algo } from '@alessiofrittoli/crypto-algorithm/types'
 import { bufferEquals } from '@alessiofrittoli/crypto-buffer/common'
-import type { ToDataViewInput } from '@alessiofrittoli/crypto-buffer/toDataView'
+import type { CoerceToUint8ArrayInput } from '@alessiofrittoli/crypto-buffer'
 
 export class Hash
 {
 	/**
-	 * Hash string.
-	 * The result will be always the same with the same string.
-	 * 
-	 * The algorithm is dependent on the available algorithms supported by the version of OpenSSL on the platform.
-	 * Examples are 'sha256', 'sha512', etc.
-	 * On recent releases of OpenSSL, openssl list -digest-algorithms will display the available digest algorithms.
-	 * 
-	 * @param	string		The string to hash.
-	 * @param	algorithm	( Optional ) The hash algorithm. Default: `SHA-256`.
-	 * 
-	 * @returns The hashed string Buffer.
+	 * Generates a cryptographic hash of the given input using the specified algorithm.
+	 *
+	 * @param input - The data to be hashed. This can be a string, Buffer, TypedArray, or DataView.
+	 * @param algorithm - The hash algorithm to use. Defaults to 'SHA-256'. Can be any valid hash algorithm supported by the crypto module (you can use `crypto.getHashes()` to get the list of supported hashes).
+	 * @returns A Buffer containing the resulting hash.
 	 */
 	static digest(
-		string		: crypto.BinaryLike,
+		input		: crypto.BinaryLike,
 		algorithm	: Algo.Hash | Algo.OtherHash = 'SHA-256',	
 	): Buffer
 	{
 		return (
 			crypto
 				.createHash( algorithm )
-				.update( string )
+				.update( input )
 				.digest()
 		)
 	}
 
 
 	/**
-	 * Compare string with hash.
-	 * 
-	 * @param	string		The string to compare.
-	 * @param	hashed		The hashed HEX string or raw Buffer.
-	 * @param	algorithm	( Optional ) The algorithm used to generate the given hash. Default: `SHA-256`.
-	 * 
-	 * @returns	True if string matches with the hashed string, false otherwise. 
+	 * Validates if the given input, when hashed with the specified algorithm, matches the provided hashed value.
+	 *
+	 * @param input - The raw input data.
+	 * @param digest - The hash digest value to compare against.
+	 * @param algorithm - The hash algorithm previously used while generating the `hashed` data. Defaults to 'SHA-256'.
+	 * @returns A boolean indicating whether the hashed input matches the provided hashed value.
 	 */
 	static isValid(
-		string		: string,
-		hashed		: ToDataViewInput,
+		input		: crypto.BinaryLike,
+		digest		: CoerceToUint8ArrayInput,
 		algorithm	: Algo.Hash | Algo.OtherHash = 'SHA-256',	
 	)
 	{
-		return bufferEquals( Hash.digest( string, algorithm ), hashed )
+		return bufferEquals( Hash.digest( input, algorithm ), digest )
 	}
 }

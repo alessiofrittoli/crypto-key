@@ -1,5 +1,18 @@
 import { Scrypt, type ScryptOptions } from '@/Scrypt'
 
+console.log(
+`
+__________________________________________
+       _____                       __ 
+      / ___/____________  ______  / /_
+      \\__ \\/ ___/ ___/ / / / __ \\/ __/
+     ___/ / /__/ /  / /_/ / /_/ / /_  
+    /____/\\___/_/   \\__, / .___/\\__/  
+                   /____/_/           
+__________________________________________
+`
+)
+
 const password = 'verystrongpassword'
 const options: ScryptOptions = {
 	cost			: 8192 * 2,
@@ -80,7 +93,7 @@ describe( 'Scrypt.isValid()', () => {
 
 	it( 'returns `false` if an error occurs during validation', () => {
 		// @ts-expect-error negative testing
-		expect( Scrypt.isValid( '123', '123' ) )
+		expect( Scrypt.isValid( {}, {} ) )
 			.toBe( false )
 	} )
 	

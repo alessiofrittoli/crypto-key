@@ -2,7 +2,7 @@ import crypto from 'crypto'
 import type stream from 'stream'
 import type { Algo } from '@alessiofrittoli/crypto-algorithm/types'
 import { bufferEquals } from '@alessiofrittoli/crypto-buffer/common'
-import { ToDataViewInput } from '@alessiofrittoli/crypto-buffer/toDataView'
+import type { CoerceToUint8ArrayInput } from '@alessiofrittoli/crypto-buffer'
 
 export type HmacReturnType<
 	T extends BufferEncoding | undefined = undefined
@@ -50,7 +50,7 @@ export class Hmac
 	/**
 	 * Compare Hmac digest.
 	 * 
-	 * @param	hash		The hmac digest.
+	 * @param	digest		The hmac digest.
 	 * @param	message		The protected message.
 	 * @param	secret		The secret key used for hashing.
 	 * @param	algorithm	( Optional ) The algorithm used for hashing. Default: `SHA-256`.
@@ -60,7 +60,7 @@ export class Hmac
 	 * @returns	True if the given hash is valid, false otherwise.
 	 */
 	static isValid(
-		hash		: ToDataViewInput,
+		digest		: CoerceToUint8ArrayInput,
 		message		: crypto.BinaryLike,
 		secret		: crypto.BinaryLike | crypto.KeyObject,
 		algorithm?	: Algo.Hash,
@@ -70,13 +70,13 @@ export class Hmac
 	{
 		const target = Hmac.digest( message, secret, algorithm, encoding, options )
 		
-		if ( typeof hash === 'string' ) {
+		if ( typeof digest === 'string' ) {
 			if ( typeof target !== 'string' ) {
 				throw new TypeError( 'You must specify the encoding used during the HMAC generation.' )
 			}
-			return hash === target
+			return digest === target
 		}
 	
-		return bufferEquals( hash, target )
+		return bufferEquals( digest, target )
 	}
 }

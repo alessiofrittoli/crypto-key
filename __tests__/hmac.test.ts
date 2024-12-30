@@ -1,6 +1,18 @@
 import { Hmac } from '@/Hmac'
 import type { Algo } from '@alessiofrittoli/crypto-algorithm/types'
 
+console.log(
+`
+______________________________________
+        __  __                    
+       / / / /___ ___  ____ ______
+      / /_/ / __ \`__ \\/ __ \`/ ___/
+     / __  / / / / / / /_/ / /__  
+    /_/ /_/_/ /_/ /_/\\__,_/\\___/  
+______________________________________
+`
+)
+
 const tests: ( {
 	input	: string
 	secret	: string
