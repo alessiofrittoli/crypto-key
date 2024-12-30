@@ -1,8 +1,24 @@
 import { Cipher } from '@/Cipher'
 import { bufferEquals } from '@alessiofrittoli/crypto-buffer/common'
 
+console.log(
+`
+________________________________________
+       _______       __             
+      / ____(_)___  / /_  ___  _____
+     / /   / / __ \\/ __ \\/ _ \\/ ___/
+    / /___/ / /_/ / / / /  __/ /    
+    \\____/_/ .___/_/ /_/\\___/_/     
+          /_/                       
+________________________________________
+`
+)
+
+
 const dataToEncrypt	= 'my TOP-SECRET message'
 const password		= 'verystrong-password'
+
+
 
 describe( 'Cipher.encrypt()', () => {
 

@@ -2,6 +2,19 @@ import crypto from 'crypto'
 import type { Algo } from '@alessiofrittoli/crypto-algorithm/types'
 import { Hash } from '@/Hash'
 
+console.log(
+`
+_________________________________
+        __  __           __  
+       / / / /___ ______/ /_ 
+      / /_/ / __ \`/ ___/ __ \\
+     / __  / /_/ (__  ) / / /
+    /_/ /_/\\__,_/____/_/ /_/
+_________________________________
+`
+)
+
+
 const password	= 'verystrongpassword'
 const hashes	= crypto.getHashes() as Algo.OtherHash[]
 
