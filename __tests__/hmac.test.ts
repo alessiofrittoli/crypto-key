@@ -1,12 +1,12 @@
-import Hmac from '@/Hmac'
-import type Algo from '@alessiofrittoli/crypto-algorithm/types'
+import { Hmac } from '@/Hmac'
+import type { Algo } from '@alessiofrittoli/crypto-algorithm/types'
 
-const tests: ({
+const tests: ( {
 	input	: string
 	secret	: string
 	hash	: Algo.Hash
 	output	: string
-})[] = [
+} )[] = [
 	{
 		input	: 'message',
 		secret	: 'secretkey',
@@ -71,6 +71,28 @@ describe( 'Hmac.isValid()', () => {
 		expect(
 			Hmac.isValid( hash, 'raw value', 'secret' )
 		).toBe( true )
+	} )
+
+
+	it( 'supports mixed input data types', () => {
+		/** base64url HMAC non-decoded Buffer. */
+		const hash = (
+			Buffer.from(
+				Hmac.digest( 'raw value', 'secret', undefined, 'base64url' )
+			)
+		)
+
+		expect( Hmac.isValid( hash, 'raw value', 'secret', undefined, 'base64url' ) )
+			.toBe( true )
+	} )
+
+	
+	it( 'throws a new Exception if the given hash is a string but no input encoding has been provided', () => {
+		const hash = Hmac.digest( 'raw value', 'secret' ).toString( 'base64url' )
+		expect(
+			() => Hmac.isValid( hash, 'raw value', 'secret' )
+		).toThrow( 'You must specify the encoding used during the HMAC generation.' )
+
 	} )
 
 } )

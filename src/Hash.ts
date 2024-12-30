@@ -1,8 +1,9 @@
 import crypto from 'crypto'
-import type Algo from '@alessiofrittoli/crypto-algorithm/types'
+import type { Algo } from '@alessiofrittoli/crypto-algorithm/types'
 import { bufferEquals } from '@alessiofrittoli/crypto-buffer/common'
+import type { ToDataViewInput } from '@alessiofrittoli/crypto-buffer/toDataView'
 
-class Hash
+export class Hash
 {
 	/**
 	 * Hash string.
@@ -42,17 +43,10 @@ class Hash
 	 */
 	static isValid(
 		string		: string,
-		hashed		: string | Buffer,
+		hashed		: ToDataViewInput,
 		algorithm	: Algo.Hash | Algo.OtherHash = 'SHA-256',	
 	)
 	{
-		return (
-			Buffer.isBuffer( hashed )
-				? bufferEquals( Hash.digest( string, algorithm ), hashed )
-				: Hash.digest( string, algorithm ).toString( 'hex' ) === hashed
-		)
+		return bufferEquals( Hash.digest( string, algorithm ), hashed )
 	}
 }
-
-
-export default Hash

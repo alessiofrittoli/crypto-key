@@ -43,7 +43,7 @@ export interface ScryptOptions extends crypto.ScryptOptions
 }
 
 
-interface ScryptHashOptions
+export interface ScryptHashOptions
 {
 	/** The hash length. Minimum: `16`, Maximum: `256`. Default: `64`. */
 	length?: number
@@ -58,7 +58,7 @@ interface ScryptHashOptions
  * Scrypt Utility static class.
  * 
  */
-class Scrypt
+export class Scrypt
 {
 	private static SALT_LENGTH = {
 		min		: 16,
@@ -116,19 +116,19 @@ class Scrypt
 
 		if ( ! hash ) return false
 		if ( hash.length <= 0 ) return false
-
-		options.length		||= Scrypt.HASH_LENGTH.default
-		options.saltLength	||= Scrypt.SALT_LENGTH.default
-		options.length		= Math.min( Math.max( options.length, Scrypt.HASH_LENGTH.min ), Scrypt.HASH_LENGTH.max )
-		options.saltLength	= Math.min( Math.max( options.saltLength, Scrypt.SALT_LENGTH.min ), Scrypt.SALT_LENGTH.max )
-		const salt			= hash.subarray( 0, options.saltLength )
-		hash				= hash.subarray( options.saltLength )
-
-		if ( hash.length !== options.length ) {
-			return false
-		}
-
+		
 		try {
+
+			options.length		||= Scrypt.HASH_LENGTH.default
+			options.saltLength	||= Scrypt.SALT_LENGTH.default
+			options.length		= Math.min( Math.max( options.length, Scrypt.HASH_LENGTH.min ), Scrypt.HASH_LENGTH.max )
+			options.saltLength	= Math.min( Math.max( options.saltLength, Scrypt.SALT_LENGTH.min ), Scrypt.SALT_LENGTH.max )
+			const salt			= hash.subarray( 0, options.saltLength )
+			hash				= hash.subarray( options.saltLength )
+	
+			if ( hash.length !== options.length ) {
+				return false
+			}
 
 			const buffer = crypto.scryptSync( key, salt, options.length, options.options )
 
@@ -145,6 +145,3 @@ class Scrypt
 
 	}
 }
-
-
-export default Scrypt

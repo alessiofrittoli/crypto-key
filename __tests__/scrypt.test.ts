@@ -1,4 +1,4 @@
-import Scrypt, { type ScryptOptions } from '@/Scrypt'
+import { Scrypt, type ScryptOptions } from '@/Scrypt'
 
 const password = 'verystrongpassword'
 const options: ScryptOptions = {
@@ -61,5 +61,28 @@ describe( 'Scrypt.isValid()', () => {
 		expect( Scrypt.isValid( 'wrong password', Scrypt.hash( password, { options } ), { options } ) )
 			.toBe( false )
 	} )
+	
+	
+	it( 'returns `false` if no hash or empty hash is provided', () => {
+		// @ts-expect-error negative testing
+		expect( Scrypt.isValid( password, undefined ) )
+			.toBe( false )
+		expect( Scrypt.isValid( password, Buffer.from( [] ) ) )
+			.toBe( false )
+	} )
+
+
+	it( 'returns `false` hash length is differente then the length provided in the options', () => {
+		expect( Scrypt.isValid( password, Buffer.from( [ 1, 2, 3 ] ), { length: 2 } ) )
+			.toBe( false )
+	} )
+
+
+	it( 'returns `false` if an error occurs during validation', () => {
+		// @ts-expect-error negative testing
+		expect( Scrypt.isValid( '123', '123' ) )
+			.toBe( false )
+	} )
+	
 
 } )
