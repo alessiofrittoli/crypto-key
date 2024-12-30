@@ -2,6 +2,7 @@ import crypto from 'crypto'
 import type stream from 'stream'
 import type { Algo } from '@alessiofrittoli/crypto-algorithm/types'
 import { bufferEquals } from '@alessiofrittoli/crypto-buffer/common'
+import { ToDataViewInput } from '@alessiofrittoli/crypto-buffer/toDataView'
 
 export type HmacReturnType<
 	T extends BufferEncoding | undefined = undefined
@@ -18,8 +19,8 @@ export class Hmac
 	 * Generate Hash-based message authentication code.
 	 * 
 	 * @param	message		The protected message.
-	 * @param	secret		The secret key used for encryption.
-	 * @param	algorithm	( Optional ) The algorithm used for encryption. Default: `SHA-256`.
+	 * @param	secret		The secret key used for hashing.
+	 * @param	algorithm	( Optional ) The algorithm used for hashing. Default: `SHA-256`.
 	 * @param	options		( Optional ) Additional options.
 	 * 
 	 * @returns	The hashed string.
@@ -51,19 +52,19 @@ export class Hmac
 	 * 
 	 * @param	hash		The hmac digest.
 	 * @param	message		The protected message.
-	 * @param	secret		The secret key used for encryption.
-	 * @param	algorithm	( Optional ) The algorithm used for encryption. Default: `sha256`.
+	 * @param	secret		The secret key used for hashing.
+	 * @param	algorithm	( Optional ) The algorithm used for hashing. Default: `SHA-256`.
 	 * @param	encoding	( Optional ) The encoding used to generate the hash output.
 	 * @param	options		( Optional ) Additional options.
 	 * 
 	 * @returns	True if the given hash is valid, false otherwise.
 	 */
-	static isValid<T extends BufferEncoding | undefined = undefined>(
-		hash		: HmacReturnType<T>,
+	static isValid(
+		hash		: ToDataViewInput,
 		message		: crypto.BinaryLike,
 		secret		: crypto.BinaryLike | crypto.KeyObject,
 		algorithm?	: Algo.Hash,
-		encoding?	: T,
+		encoding?	: BufferEncoding,
 		options?	: stream.TransformOptions,
 	)
 	{
@@ -74,9 +75,6 @@ export class Hmac
 				throw new TypeError( 'You must specify the encoding used during the HMAC generation.' )
 			}
 			return hash === target
-		}
-		if ( typeof target === 'string' ) {
-			throw new TypeError( 'The compared HMAC is not of type Buffer. Please, omit the \'encoding\' parameter.' )
 		}
 	
 		return bufferEquals( hash, target )
