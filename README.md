@@ -1,6 +1,6 @@
 # Crypto Key 🔑
 
-Version 1.0.0
+Version 2.0.0
 
 ## Lightweight TypeScript library for Node.js Cryptographic keys
 
