@@ -10,10 +10,22 @@ describe( 'Cipher.encrypt()', () => {
 		expect( Cipher.encrypt( dataToEncrypt, password ) )
 			.toBeInstanceOf( Buffer )
 	} )
+	
+	
+	it( 'encrypts data with custom `aes-128-gcm` algorithm', () => {
+		expect( Cipher.encrypt( dataToEncrypt, password, { algorithm: 'aes-128-gcm' } ) )
+			.toBeInstanceOf( Buffer )
+	} )
 
 
-	it( 'encrypts data with custom algorithm', () => {
+	it( 'encrypts data with custom `aes-192-gcm` algorithm', () => {
 		expect( Cipher.encrypt( dataToEncrypt, password, { algorithm: 'aes-192-gcm' } ) )
+			.toBeInstanceOf( Buffer )
+	} )
+
+
+	it( 'encrypts data with custom `aes-256-gcm` algorithm', () => {
+		expect( Cipher.encrypt( dataToEncrypt, password, { algorithm: 'aes-256-gcm' } ) )
 			.toBeInstanceOf( Buffer )
 	} )
 
