@@ -1,6 +1,14 @@
 # Crypto Key 🔑
 
-Version 2.0.0
+[![NPM Latest Version][version-badge]][npm-url] [![Coverage Status][coverage-badge]][coverage-url] [![NPM Monthly Downloads][downloads-badge]][npm-url] [![Dependencies][deps-badge]][deps-url]
+
+[version-badge]: https://img.shields.io/npm/v/%40alessiofrittoli%2Fcrypto-key
+[npm-url]: https://npmjs.org/package/%40alessiofrittoli%2Fcrypto-key
+[coverage-badge]: https://coveralls.io/repos/github/alessiofrittoli/crypto-key/badge.svg
+[coverage-url]: https://coveralls.io/github/alessiofrittoli/crypto-key
+[downloads-badge]: https://img.shields.io/npm/dm/%40alessiofrittoli%2Fcrypto-key.svg
+[deps-badge]: https://img.shields.io/librariesio/release/npm/%40alessiofrittoli%2Fcrypto-key
+[deps-url]: https://libraries.io/npm/%40alessiofrittoli%2Fcrypto-key
 
 ## Lightweight TypeScript library for Node.js Cryptographic keys
 
@@ -8,31 +16,31 @@ Version 2.0.0
 
 - [Getting started](#getting-started)
 - [API Reference](#api-reference)
-	- [`Hash` Class](#hash-class)
-		- [Methods](#methods)
-			- [`Hash.digest()`](#hashdigest)
-			- [`Hash.isValid()`](#hashisvalid)
-		- [Example Usage](#example-usage)
-	- [`Hmac` Class](#hmac-class)
-		- [Methods](#methods-1)
-			- [`Hmac.digest()`](#hmacdigest)
-			- [`Hmac.isValid()`](#hmacisvalid)
-		- [Example Usage](#example-usage-1)
-	- [`Cipher` Class](#cipher-class)
-		- [Cipher Type Interfaces](#cipher-type-interfaces)
-			- [CipherOptions](#cipheroptions)
-		- [Methods](#methods-2)
-			- [`Cipher.decrypt()`](#cipherdecrypt)
-			- [`Cipher.encrypt()`](#cipherencrypt)
-		- [Example Usage](#example-usage-2)
-	- [`Scrypt` Class](#scrypt-class)
-		- [Scrypt Type Interfaces](#scrypt-type-interfaces)
-			- [ScryptOptions](#scryptoptions)
-			- [ScryptHashOptions](#scrypthashoptions)
-		- [Methods](#methods-3)
-			- [`Scrypt.hash()`](#scrypthash)
-			- [`Scrypt.isValid()`](#scryptisvalid)
-		- [Example Usage](#example-usage-3)
+  - [`Hash` Class](#hash-class)
+    - [Methods](#methods)
+      - [`Hash.digest()`](#hashdigest)
+      - [`Hash.isValid()`](#hashisvalid)
+    - [Example Usage](#example-usage)
+  - [`Hmac` Class](#hmac-class)
+    - [Methods](#methods-1)
+      - [`Hmac.digest()`](#hmacdigest)
+      - [`Hmac.isValid()`](#hmacisvalid)
+    - [Example Usage](#example-usage-1)
+  - [`Cipher` Class](#cipher-class)
+    - [Cipher Type Interfaces](#cipher-type-interfaces)
+      - [CipherOptions](#cipheroptions)
+    - [Methods](#methods-2)
+      - [`Cipher.decrypt()`](#cipherdecrypt)
+      - [`Cipher.encrypt()`](#cipherencrypt)
+    - [Example Usage](#example-usage-2)
+  - [`Scrypt` Class](#scrypt-class)
+    - [Scrypt Type Interfaces](#scrypt-type-interfaces)
+      - [ScryptOptions](#scryptoptions)
+      - [ScryptHashOptions](#scrypthashoptions)
+    - [Methods](#methods-3)
+      - [`Scrypt.hash()`](#scrypthash)
+      - [`Scrypt.isValid()`](#scryptisvalid)
+    - [Example Usage](#example-usage-3)
 - [Security](#security)
 - [Credits](#made-with-)
 
@@ -40,7 +48,7 @@ Version 2.0.0
 
 ### Getting started
 
-Run the following command to start using `crypto-key` in your projects:
+The `crypto-key` library it's part of the [`crypto`](https://npmjs.com/search?q=%40alessiofrittoli%2Fcrypto) utility libraries and can be installed by running the following command:
 
 ```bash
 npm i @alessiofrittoli/crypto-key
@@ -55,6 +63,10 @@ pnpm i @alessiofrittoli/crypto-key
 ---
 
 ### API Reference
+
+This module supports different input data types and it uses the [`coerceToUint8Array`](https://npmjs.com/package/@alessiofrittoli/crypto-buffer#coercetouint8array) utility function from [`@alessiofrittoli/crypto-buffer`](https://npmjs.com/package/@alessiofrittoli/crypto-buffer) to convert it to a `Uint8Array`.
+
+- See [`coerceToUint8Array`](https://npmjs.com/package/@alessiofrittoli/crypto-buffer#coercetouint8array) for more informations about the supported input types.
 
 #### `Hash` Class
 
@@ -118,8 +130,8 @@ import { Hash } from '@alessiofrittoli/crypto-key'
 import { Hash } from '@alessiofrittoli/crypto-key/Hash'
 
 console.log(
-	Hash.digest( 'raw string value' )
-		.toString( 'hex' )
+  Hash.digest( 'raw string value' )
+    .toString( 'hex' )
 )
 ```
 
@@ -206,7 +218,7 @@ import { Hmac } from '@alessiofrittoli/crypto-key'
 import { Hmac } from '@alessiofrittoli/crypto-key/Hmac'
 
 console.log(
-	Hmac.digest( 'raw string value', 'mysecretkey', 'SHA-256', 'hex' )
+  Hmac.digest( 'raw string value', 'mysecretkey', 'SHA-256', 'hex' )
 ) // Outputs the HMAC value in HEX format.
 ```
 
@@ -222,7 +234,7 @@ const secret	= 'mysecretkey'
 const hmac		= Hmac.digest( message, secret )
 
 console.log(
-	Hmac.isValid( hmac, message, secret )
+  Hmac.isValid( hmac, message, secret )
 ) // Outputs: `true`
 ```
 
@@ -315,8 +327,8 @@ import { Cipher } from '@alessiofrittoli/crypto-key'
 import { Cipher } from '@alessiofrittoli/crypto-key/Cipher'
 
 console.log(
-	Cipher.encrypt( 'My data to encrypt', 'mysecretkey' )
-		.toString( 'hex' )
+  Cipher.encrypt( 'My data to encrypt', 'mysecretkey' )
+    .toString( 'hex' )
 ) // Outputs encrypted data in HEX format.
 ```
 
@@ -331,8 +343,8 @@ const secret	= 'mysecretkey'
 const encrypted	= Cipher.encrypt( 'My data to encrypt', secret )
 
 console.log(
-	Cipher.decrypt( encrypted, secret )
-		.toString()
+  Cipher.decrypt( encrypted, secret )
+    .toString()
 ) // Outputs: 'My data to encrypt'
 ```
 
@@ -451,8 +463,8 @@ import { Scrypt } from '@alessiofrittoli/crypto-key'
 import { Scrypt } from '@alessiofrittoli/crypto-key/Scrypt'
 
 console.log(
-	Scrypt.hash( 'user-provided-password' )
-		.toString( 'hex' )
+  Scrypt.hash( 'user-provided-password' )
+    .toString( 'hex' )
 ) // Outputs the hash in HEX format.
 ```
 
@@ -469,7 +481,7 @@ const password	= 'user-provided-password';
 const hash		= Scrypt.hash( password, { length: 32, saltLength: 16 } )
 
 console.log(
-	Scrypt.isValid( password, hash, { length: 32, saltLength: 16 } )
+  Scrypt.isValid( password, hash, { length: 32, saltLength: 16 } )
 ) // Outputs: true
 ```
 
@@ -482,30 +494,30 @@ If you believe you have found a security vulnerability, we encourage you to **_r
 ### Made with ☕
 
 <table style='display:flex;gap:20px;'>
-	<tbody>
-		<tr>
-			<td>
-				<img src='https://avatars.githubusercontent.com/u/35973186' style='width:60px;border-radius:50%;object-fit:contain;'>
-			</td>
-			<td>
-				<table style='display:flex;gap:2px;flex-direction:column;'>
-					<tbody>
-						<tr>
-							<td>
-								<a href='https://github.com/alessiofrittoli' target='_blank' rel='noopener'>Alessio Frittoli</a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<small>
-									<a href='https://alessiofrittoli.it' target='_blank' rel='noopener'>https://alessiofrittoli.it</a> |
-									<a href='mailto:info@alessiofrittoli.it' target='_blank' rel='noopener'>info@alessiofrittoli.it</a>
-								</small>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-		</tr>
-	</tbody>
+  <tbody>
+    <tr>
+      <td>
+        <img src='https://avatars.githubusercontent.com/u/35973186' style='width:60px;border-radius:50%;object-fit:contain;'>
+      </td>
+      <td>
+        <table style='display:flex;gap:2px;flex-direction:column;'>
+          <tbody>
+            <tr>
+              <td>
+                <a href='https://github.com/alessiofrittoli' target='_blank' rel='noopener'>Alessio Frittoli</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <small>
+                  <a href='https://alessiofrittoli.it' target='_blank' rel='noopener'>https://alessiofrittoli.it</a> |
+                  <a href='mailto:info@alessiofrittoli.it' target='_blank' rel='noopener'>info@alessiofrittoli.it</a>
+                </small>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
 </table>
