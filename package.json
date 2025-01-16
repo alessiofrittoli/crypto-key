@@ -80,10 +80,10 @@
 		"test:coverage:jsdom:serve": "JSDOM=true pnpm test:coverage:serve",
 		"test:jest": "pnpm test:watch jest.test.ts",
 		"test:jest:jsdom": "JSDOM=true pnpm test:jest",
-		"test:cipher": "pnpm test cipher.test.ts",
-		"test:hash": "pnpm test hash.test.ts",
-		"test:hmac": "pnpm test hmac.test.ts",
-		"test:scrypt": "pnpm test scrypt.test.ts"
+		"test:cipher": "pnpm test:watch cipher.test.ts",
+		"test:hash": "pnpm test:watch hash.test.ts",
+		"test:hmac": "pnpm test:watch hmac.test.ts",
+		"test:scrypt": "pnpm test:watch scrypt.test.ts"
 	},
 	"devDependencies": {
 		"@alessiofrittoli/node-scripts": "^2.2.1",
