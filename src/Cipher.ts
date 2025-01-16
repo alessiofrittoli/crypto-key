@@ -11,11 +11,12 @@ export interface CipherOptions
 	iv?: number
 }
 
+let warningEmitted = false
 
 /**
  * @deprecated ⚠️ The `Cipher` implementation has been moved to [**crypto-cipher**](https://npmjs.com/package/@alessiofrittoli/crypto-cipher) node module with new powerfull implementations
  * and it will be removed with the `3.0.0` release.
- * Run `pnpm i @alessiofrittoli/crpyto-cipher` to start using this new powerfull implementation.
+ * Run `pnpm i @alessiofrittoli/crypto-cipher` to start using this new powerfull implementation.
  * 
  * The new [**crypto-cipher**](https://npmjs.com/package/@alessiofrittoli/crypto-cipher) now supports:
  * - in-memory encrypt/decrypt
@@ -40,6 +41,15 @@ export class Cipher
 	}
 
 
+	private static deprecationWarning()
+	{
+		if ( warningEmitted ) return
+		warningEmitted = true
+		const message = '⚠️ The `Cipher` implementation has been moved to @alessiofrittoli/crypto-cipher node module \nwith new powerfull implementations and it will be removed with the `3.0.0` release.\n\nRun `pnpm i @alessiofrittoli/crypto-cipher` to start using this new powerfull implementation.'
+		console.log( `---------------------------\n\n${ message }\n\n---------------------------` )
+	}
+
+
 	/**
 	 * Encrypt data.
 	 * 
@@ -54,6 +64,8 @@ export class Cipher
 		options	: CipherOptions = {},
 	): Buffer
 	{
+		Cipher.deprecationWarning()
+
 		options.salt	||= Cipher.SALT_LENGTH.default
 		options.iv	||= Cipher.IV_LENGTH.default
 		options.salt	= Math.min( Math.max( options.salt, Cipher.SALT_LENGTH.min ), Cipher.SALT_LENGTH.max )
@@ -86,6 +98,7 @@ export class Cipher
 		options	: CipherOptions = {},
 	): Buffer
 	{
+		Cipher.deprecationWarning()
 		options.salt	||= Cipher.SALT_LENGTH.default
 		options.iv	||= Cipher.IV_LENGTH.default
 		options.salt	= Math.min( Math.max( options.salt, Cipher.SALT_LENGTH.min ), Cipher.SALT_LENGTH.max )
