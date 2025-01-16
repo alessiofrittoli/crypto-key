@@ -12,6 +12,18 @@ export interface CipherOptions
 }
 
 
+/**
+ * @deprecated ⚠️ The `Cipher` implementation has been moved to [**crypto-cipher**](https://npmjs.com/package/@alessiofrittoli/crypto-cipher) node module with new powerfull implementations
+ * and it will be removed with the `3.0.0` release.
+ * Run `pnpm i @alessiofrittoli/crpyto-cipher` to start using this new powerfull implementation.
+ * 
+ * The new [**crypto-cipher**](https://npmjs.com/package/@alessiofrittoli/crypto-cipher) now supports:
+ * - in-memory encrypt/decrypt
+ * - in-memory stream symmetric encryption/decryption
+ * - in-memory stream hybrid encryption/decryption
+ * - file based stream symmetric encryption/decryption
+ * - file based stream hybrid encryption/decryption
+*/
 export class Cipher
 {
 	private static SALT_LENGTH = {
