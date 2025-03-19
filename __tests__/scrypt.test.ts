@@ -76,6 +76,13 @@ describe( 'Scrypt.isValid()', () => {
 	} )
 	
 	
+	it( 'returns `false` if an error occurs during validation', () => {
+		//@ts-expect-error negative testing unexpected input (2342)
+		expect( Scrypt.isValid( 2343, Scrypt.hash( password, { options } ), { options } ) )
+			.toBe( false )
+	} )
+
+
 	it( 'returns `false` if no hash or empty hash is provided', () => {
 		// @ts-expect-error negative testing
 		expect( Scrypt.isValid( password, undefined ) )
