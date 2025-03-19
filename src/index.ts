@@ -1,4 +1,3 @@
-export * from './Cipher'
 export * from './Hash'
 export * from './Hmac'
 export * from './Scrypt'

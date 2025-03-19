@@ -35,11 +35,6 @@
 			"import": "./dist/index.mjs",
 			"require": "./dist/index.js"
 		},
-		"./Cipher": {
-			"types": "./dist/Cipher.d.ts",
-			"import": "./dist/Cipher.mjs",
-			"require": "./dist/Cipher.js"
-		},
 		"./Hash": {
 			"types": "./dist/Hash.d.ts",
 			"import": "./dist/Hash.mjs",
@@ -80,7 +75,6 @@
 		"test:coverage:jsdom:serve": "JSDOM=true pnpm test:coverage:serve",
 		"test:jest": "pnpm test:watch jest.test.ts",
 		"test:jest:jsdom": "JSDOM=true pnpm test:jest",
-		"test:cipher": "pnpm test:watch cipher.test.ts",
 		"test:hash": "pnpm test:watch hash.test.ts",
 		"test:hmac": "pnpm test:watch hmac.test.ts",
 		"test:scrypt": "pnpm test:watch scrypt.test.ts"
