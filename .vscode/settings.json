@@ -7,5 +7,7 @@
 		"statusBar.border":"#91BE1E",
 		"statusBar.foreground": "#F0F0F0",
 		"activityBar.activeBorder": "#91BE1E",
+		"activityBarBadge.foreground":"#212121",
+		"activityBarBadge.background":"#91BE1E",
 	},
 }
