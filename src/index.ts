@@ -1,5 +1,12 @@
-export * from './Hash'
-export * from './Hmac'
-export * from './Scrypt'
+import crypto from 'crypto'
 
-export * from './utils'
+/**
+ * Generate random key.
+ *
+ * @param bytes		( Optional ) The number of bytes to generate. Default: `64`.
+ * @param encoding	( Optional ) The string encoding. Default: `hex`.
+ *
+ * @returns	A random key.
+ */
+export const generateKey = (bytes = 64, encoding: BufferEncoding = 'hex'): string =>
+	crypto.randomBytes(bytes).toString(encoding)
