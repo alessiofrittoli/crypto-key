@@ -89,6 +89,14 @@
 		"@alessiofrittoli/crypto-algorithm": "^2.5.0",
 		"@alessiofrittoli/crypto-buffer": "^3.12.0"
 	},
+	"peerDependenciesMeta": {
+		"@alessiofrittoli/crypto-algorithm": {
+			"optional": true
+		},
+		"@alessiofrittoli/crypto-buffer": {
+			"optional": true
+		}
+	},
 	"devDependencies": {
 		"@alessiofrittoli/crypto-algorithm": "^2.5.0",
 		"@alessiofrittoli/crypto-buffer": "3.12.0",
