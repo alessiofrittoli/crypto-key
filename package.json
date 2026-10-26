@@ -1,6 +1,6 @@
 {
 	"name": "@alessiofrittoli/crypto-key",
-	"version": "4.0.0",
+	"version": "4.0.1",
 	"description": "Lightweight TypeScript library for Node.js Cryptographic keys",
 	"type": "module",
 	"author": {
