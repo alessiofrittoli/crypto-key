@@ -22,15 +22,15 @@ describe('Scrypt.hash()', () => {
 	})
 
 	it('allows hash length customization', () => {
-		expect(Scrypt.hash(password, { length: 16 }).length).toBe(48)
+		expect(Scrypt.hash(password, { hashLength: 16 }).length).toBe(48)
 	})
 
 	it('allows salt length customization', () => {
-		expect(Scrypt.hash(password, { length: 16, saltLength: 16 }).length).toBe(32)
+		expect(Scrypt.hash(password, { hashLength: 16, saltLength: 16 }).length).toBe(32)
 	})
 
 	it('allows algorithm customization', () => {
-		expect(Scrypt.hash(password, { length: 16, saltLength: 16, options }).length).toBe(32)
+		expect(Scrypt.hash(password, { hashLength: 16, saltLength: 16, options }).length).toBe(32)
 	})
 })
 
@@ -56,8 +56,8 @@ describe('Scrypt.isValid()', () => {
 		expect(Scrypt.isValid(password, Buffer.from([]))).toBe(false)
 	})
 
-	it('returns `false` hash length is differente then the length provided in the options', () => {
-		expect(Scrypt.isValid(password, Buffer.from([1, 2, 3]), { length: 2 })).toBe(false)
+	it('returns `false` hash length is different then the length provided in the options', () => {
+		expect(Scrypt.isValid(password, Buffer.from([1, 2, 3]), { hashLength: 2 })).toBe(false)
 	})
 
 	it('returns `false` if an error occurs during validation', () => {
