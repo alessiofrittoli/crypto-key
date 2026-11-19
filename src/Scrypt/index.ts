@@ -70,7 +70,7 @@ export interface ScryptHashOptions {
 	 *
 	 * @default 64
 	 */
-	length?: number
+	hashLength?: number
 	/**
 	 * The salt length. Minimum: `16`, Maximum: `64`.
 	 *
@@ -112,9 +112,9 @@ export class Scrypt {
 	 * @returns	A Buffer containing the salt (first `saltLength` bytes) followed by the derived hash.
 	 */
 	public static hash(key: crypto.BinaryLike, options: ScryptHashOptions = {}): Buffer {
-		const { length = Scrypt.HASH_LENGTH.default, saltLength = Scrypt.SALT_LENGTH.default } = options
+		const { hashLength = Scrypt.HASH_LENGTH.default, saltLength = Scrypt.SALT_LENGTH.default } = options
 
-		const safeLength = Math.min(Math.max(length, Scrypt.HASH_LENGTH.min), Scrypt.HASH_LENGTH.max)
+		const safeLength = Math.min(Math.max(hashLength, Scrypt.HASH_LENGTH.min), Scrypt.HASH_LENGTH.max)
 		const safeSaltLength = Math.min(Math.max(saltLength, Scrypt.SALT_LENGTH.min), Scrypt.SALT_LENGTH.max)
 
 		const salt = crypto.randomBytes(safeSaltLength)
@@ -149,9 +149,10 @@ export class Scrypt {
 		if (_hash.length <= 0) return false
 
 		try {
-			const { length = Scrypt.HASH_LENGTH.default, saltLength = Scrypt.SALT_LENGTH.default } = options
+			const { hashLength = Scrypt.HASH_LENGTH.default, saltLength = Scrypt.SALT_LENGTH.default } =
+				options
 
-			const safeLength = Math.min(Math.max(length, Scrypt.HASH_LENGTH.min), Scrypt.HASH_LENGTH.max)
+			const safeLength = Math.min(Math.max(hashLength, Scrypt.HASH_LENGTH.min), Scrypt.HASH_LENGTH.max)
 			const safeSaltLength = Math.min(
 				Math.max(saltLength, Scrypt.SALT_LENGTH.min),
 				Scrypt.SALT_LENGTH.max,
